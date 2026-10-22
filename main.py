@@ -13,7 +13,9 @@ def main_menu():
         choice = input("\nEnter your choice: ")
 
         if choice == "1":
-            print("Browse Clubs - Coming Soon")
+            for club in clubs:
+                club.display_info()
+                print("_" * 35)
 
         elif choice == "2":
             print("Search Club - Coming Soon")
@@ -32,8 +34,6 @@ def main_menu():
             print("Invalid choice! Please try again.")
 
 
-main_menu()
-0
 al_nassr = Club("Al Nassr", "Saudi Arabia", "Al Awwal Park", 1955, "YELLOW")
 
 al_hilal = Club("Al Hilal", "Saudi Arabia", "Kingdom Arena", 1957, "BLUE")
@@ -59,7 +59,6 @@ clubs = [
     real_madrid, barcelona, liverpool,
     man_city, man_united, juventus
 ]
-0
-for club in clubs:
-    club.display_info()
-    print("-" * 35)
+
+
+main_menu()

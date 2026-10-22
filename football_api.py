@@ -1,7 +1,7 @@
+
 import requests
 import os
 from dotenv import load_dotenv
-
 load_dotenv()
 
 api_key = os.getenv("FOOTBALL_API_KEY")
@@ -28,3 +28,4 @@ except requests.exceptions.RequestException as error:
     print("API connection failed!")
     print(f"Status Code: {response.status_code}" if "response" in locals() else "")
     print(f"Error: {error}")
+  
