@@ -38,18 +38,49 @@ def main_menu():
             input("\nPress Enter to return to the main menu...")
 
         elif choice == "2":
-             search_name = input("Enter club name: ").strip().lower()
-             found = False
+                print("\n========== FAVORITE CLUBS ==========")
+                print("1. Add Favorite Club")
+                print("2. View Favorite Clubs")
+                print("3. Remove Favorite Club")
+                print("0. Back to Main Menu")
 
-             for club in clubs:
-                 if search_name == club.name.lower():
-                     club.display_info()
-                     found = True
-                     break
-             if not found:
-                print("club not found! plz try again.")
+                favorite_choice = input("\nEnter your choice: ")
+                if favorite_choice == "1":
+                    print("\n========== SELECT CLUB ==========")
 
-             input("\nPress Enter to retern to the main menu...")
+                    for index, club in enumerate(clubs, start=1):
+                        print(f"{index}. {club.name}")
+
+                    club_number = input("\nEnter club number: ")
+
+                    if club_number.isdigit():
+                        club_number = int(club_number)
+
+                        if 1 <= club_number <= len(clubs):
+                            selected_club = clubs[club_number - 1]
+
+                            if selected_club not in favorites:
+                                favorites.append(selected_club)
+                                print(f"{selected_club.name} added to favorites! ⭐")
+                            else:
+                                print("This club is already in your favorites!")
+                        else:
+                            print("Invalid club number!")
+                    else:
+                        print("Please enter a valid number!")
+
+                    input("\nPress Enter to return to the main menu...")
+
+                elif favorite_choice == "2":
+                    print("\n========== MY FAVORITE CLUBS ==========")
+
+                    if not favorites:
+                        print("You have no favorite clubs yet!")
+                    else:
+                        for index, club in enumerate(favorites, start=1):
+                            print(f"{index}. {club.name}")
+
+                    input("\nPress Enter to return to the main menu...")
         elif choice == "3":
              print("not now")
 
@@ -90,5 +121,6 @@ clubs = [
     man_city, man_united, juventus
 ]
 
+favorites = []
 
 main_menu()
