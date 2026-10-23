@@ -81,6 +81,24 @@ def main_menu():
                             print(f"{index}. {club.name}")
 
                     input("\nPress Enter to return to the main menu...")
+                elif favorite_choice == "3":
+                    print("\n========== REMOVE FAVORITE CLUB ==========")
+
+                    if not favorites:
+                        print("You have no favorite clubs to remove!")
+                    else:
+                        for index, club in enumerate(favorites, start=1):
+                            print(f"{index}. {club.name}")
+
+                        club_number = input("\nEnter club number to remove: ")
+
+                        if club_number.isdigit() and 1 <= int(club_number) <= len(favorites):
+                            removed_club = favorites.pop(int(club_number) - 1)
+                            print(f"{removed_club.name} removed from favorites!")
+                        else:
+                            print("Invalid club number!")
+
+                    input("\nPress Enter to return to the main menu...")
         elif choice == "3":
              print("not now")
 
