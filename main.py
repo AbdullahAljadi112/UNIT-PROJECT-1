@@ -1,3 +1,4 @@
+import os
 from clubs import Club
 
 def main_menu():
@@ -13,15 +14,44 @@ def main_menu():
         choice = input("\nEnter your choice: ")
 
         if choice == "1":
-            for club in clubs:
-                club.display_info()
-                print("_" * 35)
+            print("\n========== CLUB INFORMATION ==========")
+        
+            for index, club in enumerate(clubs, start=1):
+                print(f"{index}. {club.name}")
+        
+            club_number = input("\nEnter club number: ")
+        
+            if club_number.isdigit():
+                club_number = int(club_number)
+        
+                if 1 <= club_number <= len(clubs):
+                    selected_club = clubs[club_number - 1]
+                    os.system("cls" if os.name == "nt" else "clear")
+
+                    print("========== CLUB INFORMATION ==========\n")
+                    selected_club.display_info()
+                else:
+                    print("Invalid club number!")
+            else:
+                print("Please enter a valid number!")
+        
+            input("\nPress Enter to return to the main menu...")
 
         elif choice == "2":
-            print("Search Club - Coming Soon")
+             search_name = input("Enter club name: ").strip().lower()
+             found = False
 
+             for club in clubs:
+                 if search_name == club.name.lower():
+                     club.display_info()
+                     found = True
+                     break
+             if not found:
+                print("club not found! plz try again.")
+
+             input("\nPress Enter to retern to the main menu...")
         elif choice == "3":
-            print("Club Information - Coming Soon")
+             print("not now")
 
         elif choice == "4":
             print("Club Matches - Coming Soon")
