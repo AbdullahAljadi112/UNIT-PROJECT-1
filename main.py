@@ -1,5 +1,6 @@
 import os
 from clubs import Club
+from football_api import get_club_info
 
 def main_menu():
     while True:
@@ -100,7 +101,25 @@ def main_menu():
 
                     input("\nPress Enter to return to the main menu...")
         elif choice == "3":
-             print("not now")
+            print("\n========== CLUB INFORMATION ==========")
+            print("1. Real Madrid")
+
+            club_choice = input("\nEnter club number: ")
+
+            if club_choice == "1":
+                data = get_club_info(86)
+
+                if data:
+                    print(f"\nClub: {data.get('name')}")
+                    print(f"Founded: {data.get('founded')}")
+                    print(f"Stadium: {data.get('venue')}")
+                    print(f"Website: {data.get('website')}")
+                else:
+                    print("Could not load club information.")
+            else:
+                print("Invalid club number!")
+
+            input("\nPress Enter to return to the main menu...")
 
         elif choice == "4":
             print("Club Matches - Coming Soon")
@@ -110,7 +129,7 @@ def main_menu():
             break
 
         else:
-            print("Invalid choice! Please try again.")
+            print("Invalid choice! Please try again.")  
 
 
 al_nassr = Club("Al Nassr", "Saudi Arabia", "Al Awwal Park", 1955, "YELLOW")

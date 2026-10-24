@@ -6,26 +6,19 @@ load_dotenv()
 
 api_key = os.getenv("FOOTBALL_API_KEY")
 
-url = "https://api.football-data.org/v4/teams/86"
+def get_club_info(team_id):
+    url = f"https://api.football-data.org/v4/teams/{team_id}"
 
-headers = {
-    "X-Auth-Token": api_key
-}
+    headers = {
+        "X-Auth-Token": api_key
+    }
 
-try:
-    response = requests.get(url, headers=headers, timeout=10)
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
 
-    response.raise_for_status()
+        return response.json()
 
-    data = response.json()
-
-    print("API connected successfully!")
-    print(f"Club: {data['name']}")
-    print(f"Founded: {data['founded']}")
-    print(f"Stadium: {data['venue']}")
-
-except requests.exceptions.RequestException as error:
-    print("API connection failed!")
-    print(f"Status Code: {response.status_code}" if "response" in locals() else "")
-    print(f"Error: {error}")
-  
+    except requests.exceptions.RequestException as error:
+        print(f"API Error: {error}")
+        return None
