@@ -1,8 +1,19 @@
 import os
 from clubs import Club
-from football_api import get_club_info
+from football_api import get_club_info, get_club_matches
 
 def main_menu():
+
+
+    team_ids = {
+        "Real Madrid": 86,
+        "FC Barcelona": 81,
+        "Liverpool": 64,
+        "Manchester City": 65,
+        "Manchester United": 66,
+        "Juventus": 109
+    }
+
     while True:
         print("\n========== FOOTBALL HUB ==========")
         print("Welcome to Football Hub!")
@@ -102,16 +113,7 @@ def main_menu():
                     input("\nPress Enter to return to the main menu...")
         elif choice == "3":
             print("\n========== CLUB INFORMATION ==========")
-            team_ids = {
-                 "Real Madrid": 86,
-                 "FC Barcelona": 81,
-                 "Liverpool": 64,
-                 "Manchester City": 65,
-                 "Manchester United": 66,
-                 "Juventus": 109
-}
-
-
+            
             for index, team_name in enumerate(team_ids, start=1):
                 print(f"{index}. {team_name}")
 
@@ -158,7 +160,39 @@ def main_menu():
             input("\nPress Enter to return to the main menu...")
 
         elif choice == "4":
-            print("Club Matches - Coming Soon")
+            print("\n========== CLUB MATCHES ==========")
+
+            for index, team_name in enumerate(team_ids, start=1):
+                print(f"{index}. {team_name}")
+
+            club_choice = input("\nEnter club number: ")
+
+            if club_choice.isdigit() and 1 <= int(club_choice) <= len(team_ids):
+                team_name = list(team_ids.keys())[int(club_choice) - 1]
+                team_id = team_ids[team_name]
+
+                data = get_club_matches(team_id)
+
+                if data:
+                    matches = data.get("matches", [])
+
+                    if matches:
+                        for match in matches:
+                            home = match.get("homeTeam", {}).get("name")
+                            away = match.get("awayTeam", {}).get("name")
+                            date = match.get("utcDate", "")[:10]
+                            status = match.get("status")
+
+                            print(f"\n{home} VS {away}")
+                            print(f"Date: {date}")
+                            print(f"Status: {status}")
+                    else:
+                        print("No matches available.")
+                else:
+                    print("Could not load matches.")
+            else:
+                print("Invalid club number!")
+
             input("\nPress Enter to return to the main menu...")
 
         elif choice == "0":
