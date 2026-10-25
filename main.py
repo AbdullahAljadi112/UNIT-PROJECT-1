@@ -127,8 +127,31 @@ def main_menu():
                     print(f"Founded: {data.get('founded')}")
                     print(f"Stadium: {data.get('venue')}")
                     print(f"Website: {data.get('website')}")
+                    coach = data.get("coach")
+                    if coach:
+                        print(f"Coach: {coach.get('name')}")
+                    else:
+                        print("Coach information not available")
+
+                    squad = data.get("squad", [])
+
+                    print("\n========== PLAYERS ==========")
+
+                    if squad:
+                        for player in squad[:11:-1]:
+                            print(f"{player.get('name')} - {player.get('position')}")
+                    else:
+                        print("Players information not available")
+
+
+
+
+
+
+
                 else:
                     print("Could not load club information.")
+
             else:
                 print("Invalid club number!")
 
@@ -136,13 +159,15 @@ def main_menu():
 
         elif choice == "4":
             print("Club Matches - Coming Soon")
+            input("\nPress Enter to return to the main menu...")
 
         elif choice == "0":
             print("Thank you for using Football Hub!")
             break
 
         else:
-            print("Invalid choice! Please try again.")  
+            print("Invalid choice! Please try again.")
+
 
 
 al_nassr = Club("Al Nassr", "Saudi Arabia", "Al Awwal Park", 1955, "YELLOW")
