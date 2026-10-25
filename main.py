@@ -1,6 +1,7 @@
 
 import os
-
+from validation import validate_menu_choice
+from validation import validate_club_number
 from clubs import Club
 from football_api import get_club_info, get_club_matches
 from design import (
@@ -9,6 +10,8 @@ from design import (
     show_favorites,
     show_club_info,
     show_upcoming_match,
+    show_team_selection,
+
 )
 
 
@@ -84,31 +87,27 @@ def main_menu():
         show_main_menu()
         choice = input("\nEnter your choice: ")
 
+        if not validate_menu_choice(choice, ["0" , "1" , "2" , "3" , "4"]):
+            input("\npress Enter to try again...")
+            continue
+
         if choice == "1":
 
             show_clubs(clubs)
 
+        
             club_number = input("\nEnter club number: ")
 
-            if club_number.isdigit():
+            if validate_club_number(club_number, len(clubs)):
+                club_number = int(club_number.strip())
 
-                club_number = int(club_number)
+                selected_club = clubs[club_number - 1]
 
-                if 1 <= club_number <= len(clubs):
+                os.system("cls" if os.name == "nt" else "clear")
 
-                    selected_club = clubs[club_number - 1]
+                print("\n========== CLUB INFORMATION ==========\n")
+                selected_club.display_info()
 
-                    os.system("cls" if os.name == "nt" else "clear")
-
-                    print("\n========== CLUB INFORMATION ==========\n")
-
-                    selected_club.display_info()
-
-                else:
-                    print("Invalid club number!")
-
-            else:
-                print("Please enter a valid number!")
 
             input("\nPress Enter to return to the main menu...")
 
@@ -200,18 +199,14 @@ def main_menu():
 
             print("\n========== CLUB INFORMATION ==========")
 
-            for index, team_name in enumerate(team_ids, start=1):
-                print(f"{index}. {team_name}")
+            show_team_selection(team_ids)
 
             club_choice = input("\nEnter club number: ")
 
-            if (
-                club_choice.isdigit()
-                and 1 <= int(club_choice) <= len(team_ids)
-            ):
+            if validate_club_number(club_choice, len(team_ids)):
 
                 team_name = list(team_ids.keys())[
-                    int(club_choice) - 1
+                    int(club_choice.split()) - 1
                 ]
 
                 team_id = team_ids[team_name]
@@ -224,28 +219,21 @@ def main_menu():
                 else:
                     print("Could not load club information.")
 
-            else:
-                print("Invalid club number!")
-
             input("\nPress Enter to return to the main menu...")
 
         elif choice == "4":
 
             print("\n========== CLUB MATCHES ==========")
 
-            for index, team_name in enumerate(team_ids, start=1):
-                print(f"{index}. {team_name}")
+            show_team_selection(team_ids)
 
             club_choice = input("\nEnter club number: ")
 
-            if (
-                club_choice.isdigit()
-                and 1 <= int(club_choice) <= len(team_ids)
-            ):
+            if validate_club_number(club_choice, len(team_ids)):
 
                 team_name = list(team_ids.keys())[
-                    int(club_choice) - 1
-                ]
+                    int(club_choice.strip()) - 1
+    ]
 
                 team_id = team_ids[team_name]
 
@@ -287,9 +275,6 @@ def main_menu():
 
                 else:
                     print("Could not load matches.")
-
-            else:
-                print("Invalid club number!")
 
             input("\nPress Enter to return to the main menu...")
 

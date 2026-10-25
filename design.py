@@ -12,16 +12,18 @@ def show_header():
 
 
 def show_main_menu():
-    show_header()
 
-    print(Fore.GREEN + "1. 🏟️  Browse Clubs")
-    print(Fore.YELLOW + "2. ⭐ Favorite Clubs")
-    print(Fore.CYAN + "3. ℹ️  Club Information")
-    print(Fore.MAGENTA + "4. 📅 Club Matches")
-    print(Fore.RED + "0. 🚪 Exit")
+    print(Fore.CYAN + Style.BRIGHT + "\n╔══════════════════════════════════════════════╗")
+    print(Fore.YELLOW + "║              ⚽ FOOTBALL HUB ⚽              ║")
+    print(Fore.CYAN + "╠══════════════════════════════════════════════╣")
 
-    print(Fore.WHITE + "\n" + "=" * 45)
+    print(Fore.GREEN   + "║   [1]  🏟️  Browse Clubs                       ║")
+    print(Fore.YELLOW  + "║   [2]  ⭐  Favorite Clubs                    ║")
+    print(Fore.CYAN    + "║   [3]  ℹ️  Club Information                   ║")
+    print(Fore.MAGENTA + "║   [4]  📅  Club Matches                      ║")
+    print(Fore.RED     + "║   [0]  🚪  Exit                              ║")
 
+    print(Fore.CYAN + "╚══════════════════════════════════════════════╝")
 
 def show_section(title, emoji="⚽"):
     print(Fore.CYAN + Style.BRIGHT)
@@ -100,3 +102,26 @@ def show_club_info(data):
             print(Fore.GREEN + f"🏆 {competition.get('name')}")
     else:
         print(Fore.RED + "Competitions information not available")
+
+def show_team_selection(team_ids):
+    show_section("SELECT YOUR CLUB", "⚽")
+
+    emojis = ["👑", "🔵", "🔴", "🔵", "🔴", "⚫"]
+    colors = [
+        Fore.YELLOW,
+        Fore.BLUE,
+        Fore.RED,
+        Fore.CYAN,
+        Fore.RED,
+        Fore.WHITE
+    ]
+
+    for index, team_name in enumerate(team_ids, start=1):
+        emoji = emojis[index - 1]
+        color = colors[index - 1]
+
+        print(
+            color + f"  [{index}]  {emoji} {team_name}"
+        )
+
+    print(Fore.CYAN + "═" * 45)
