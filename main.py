@@ -102,12 +102,25 @@ def main_menu():
                     input("\nPress Enter to return to the main menu...")
         elif choice == "3":
             print("\n========== CLUB INFORMATION ==========")
-            print("1. Real Madrid")
+            team_ids = {
+                 "Real Madrid": 86,
+                 "FC Barcelona": 81,
+                 "Liverpool": 64,
+                 "Manchester City": 65,
+                 "Manchester United": 66,
+                 "Juventus": 109
+}
+
+
+            for index, team_name in enumerate(team_ids, start=1):
+                print(f"{index}. {team_name}")
 
             club_choice = input("\nEnter club number: ")
 
-            if club_choice == "1":
-                data = get_club_info(86)
+            if club_choice.isdigit() and 1 <= int(club_choice) <= len(team_ids):
+                team_name = list(team_ids.keys())[int(club_choice) - 1]
+                team_id = team_ids[team_name]
+                data = get_club_info(team_id)
 
                 if data:
                     print(f"\nClub: {data.get('name')}")
