@@ -1,86 +1,21 @@
 
 import os
-from validation import validate_menu_choice
-from validation import validate_club_number
-from clubs import Club
+from validation import validate_menu_choice,validate_club_number
+from clubs import clubs, team_ids
 from football_api import get_club_info, get_club_matches
 from design import (
     show_main_menu,
     show_clubs,
     show_favorites,
     show_club_info,
-    show_upcoming_match,
     show_team_selection,
+    show_matches,
 
 )
-
-
-al_nassr = Club(
-    "Al Nassr", "Saudi Arabia", "Al Awwal Park", 1955, "YELLOW"
-)
-
-al_hilal = Club(
-    "Al Hilal", "Saudi Arabia", "Kingdom Arena", 1957, "BLUE"
-)
-
-al_ahli = Club(
-    "Al Ahli", "Saudi Arabia", "King Abdullah Sports City", 1937, "GREEN"
-)
-
-al_ittihad = Club(
-    "Al Ittihad", "Saudi Arabia", "King Abdullah Sports City", 1927, "YELLOW"
-)
-
-real_madrid = Club(
-    "Real Madrid", "Spain", "Santiago Bernabeu", 1902, "WHITE"
-)
-
-barcelona = Club(
-    "FC Barcelona", "Spain", "Spotify Camp Nou", 1899, "RED"
-)
-
-liverpool = Club(
-    "Liverpool", "England", "Anfield", 1892, "RED"
-)
-
-man_city = Club(
-    "Manchester City", "England", "Etihad Stadium", 1880, "CYAN"
-)
-
-man_united = Club(
-    "Manchester United", "England", "Old Trafford", 1878, "RED"
-)
-
-juventus = Club(
-    "Juventus", "Italy", "Allianz Stadium", 1897, "WHITE"
-)
-
-
-clubs = [
-    al_nassr,
-    al_hilal,
-    al_ahli,
-    al_ittihad,
-    real_madrid,
-    barcelona,
-    liverpool,
-    man_city,
-    man_united,
-    juventus,
-]
 
 favorites = []
 
 def main_menu():
-
-    team_ids = {
-        "Real Madrid": 86,
-        "FC Barcelona": 81,
-        "Liverpool": 64,
-        "Manchester City": 65,
-        "Manchester United": 66,
-        "Juventus": 109,
-    }
 
     while True:
 
@@ -119,7 +54,15 @@ def main_menu():
             print("3. ❌ Remove Favorite Club")
             print("0. 🔙 Back to Main Menu")
 
-            favorite_choice = input("\nEnter your choice: ")
+
+
+            favorite_choice = input("\nEnter your choice: ").strip()
+
+            if not validate_menu_choice(favorite_choice, ["0", "1", "2", "3"]):
+                input("\nPress Enter to return to the main menu...")
+                continue
+
+
 
             if favorite_choice == "1":
 
@@ -183,12 +126,8 @@ def main_menu():
                             f"\n❌ {removed_club.name} removed from favorites!"
                         )
 
-                    else:
-                        print("Invalid club number!")
-
                 input("\nPress Enter to return to the main menu...")
 
-            # BACK
             elif favorite_choice == "0":
                 continue
 
@@ -240,38 +179,8 @@ def main_menu():
                 data = get_club_matches(team_id)
 
                 if data is not None:
-
                     matches = data.get("matches", [])
-
-                    if matches:
-
-                        for match in matches:
-
-                            home = match.get(
-                                "homeTeam", {}
-                            ).get("name", "Unknown")
-
-                            away = match.get(
-                                "awayTeam", {}
-                            ).get("name", "Unknown")
-
-                            date = match.get(
-                                "utcDate", ""
-                            )[:10]
-
-                            status = match.get(
-                                "status", "Unknown"
-                            )
-
-                            show_upcoming_match(
-                                home,
-                                away,
-                                date,
-                                status,
-                            )
-
-                    else:
-                        print("No matches available.")
+                    show_matches(matches)
 
                 else:
                     print("Could not load matches.")
@@ -279,13 +188,11 @@ def main_menu():
             input("\nPress Enter to return to the main menu...")
 
         elif choice == "0":
-
             print("\n👋 Thank you for using Football Hub!")
             break
 
-        else:
-            print("\n❌ Invalid choice! Please try again.")
-            input("\nPress Enter to continue...")
-            
 if __name__ == "__main__":
     main_menu()
+
+
+                    

@@ -125,3 +125,17 @@ def show_team_selection(team_ids):
         )
 
     print(Fore.CYAN + "═" * 45)
+
+
+def show_matches(matches):
+    if not matches:
+        print("No matches available.")
+        return
+
+    for match in matches:
+        home = match.get("homeTeam", {}).get("name", "Unknown")
+        away = match.get("awayTeam", {}).get("name", "Unknown")
+        date = match.get("utcDate", "")[:10]
+        status = match.get("status", "Unknown")
+
+        show_upcoming_match(home, away, date, status)

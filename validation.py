@@ -6,7 +6,7 @@ def validate_menu_choice(choice, valid_choices):
         print("❌ Input cannot be empty!")
         return False
 
-    if not choice.isdigit():
+    if not choice.lstrip("-").isdigit():
         print("❌ Please enter numbers only!")
         return False
 
