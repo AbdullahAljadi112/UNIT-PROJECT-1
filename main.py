@@ -206,7 +206,7 @@ def main_menu():
             if validate_club_number(club_choice, len(team_ids)):
 
                 team_name = list(team_ids.keys())[
-                    int(club_choice.split()) - 1
+                    int(club_choice.strip()) - 1
                 ]
 
                 team_id = team_ids[team_name]
